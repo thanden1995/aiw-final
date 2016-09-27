@@ -1,7 +1,6 @@
 
 <?php
-include("..\server\api\Api.php");
-
+include($_SERVER['DOCUMENT_ROOT'] . "/server/api/Api.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if (isset($_GET["id"])) {

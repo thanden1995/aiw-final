@@ -1,7 +1,6 @@
 <?php
 namespace server\api;
-include("..\model\DB.php");
-
+include($_SERVER['DOCUMENT_ROOT'] . "/server/model/DB.php");
 class Api
 {
     public function getNews()
