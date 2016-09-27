@@ -7,11 +7,11 @@ class DB
 {
     public function connect()
     {
-        $host = "localhost";
-        $user = "root";
-        $password = "";
+        $host = "mysql.hostinger.vn";
+        $user = "u869657210_5c13";
+        $password = "ditmemay1";
         try {
-            $conn = new PDO("mysql:host=$host;dbname=aiw;charset=utf8", $user, $password);
+            $conn = new PDO("mysql:host=$host;dbname=u869657210_aiw;charset=utf8", $user, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
         } catch (PDOException $e) {
