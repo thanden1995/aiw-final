@@ -1,7 +1,6 @@
 <?php
 namespace server\api;
-include("model\DB.php");
-use server\model\DB;
+include("..\model\DB.php");
 
 class Api
 {

@@ -1,6 +1,6 @@
 
 <?php
-include("api/Api.php");
+include("..\server\api\Api.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
