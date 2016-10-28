@@ -1,17 +1,15 @@
-
 <?php
-include($_SERVER['DOCUMENT_ROOT'] . "/server/api/Api.php");
+use server\api\Api;
 
+include($_SERVER['DOCUMENT_ROOT'] . "/controller/Api.php");
+$api = new Api();
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if (isset($_GET["id"])) {
-
-    } else if (isset($_GET["slug"])) {
-        $api = new server\api\Api();
-        echo $api->getNewsBySlug($_GET["slug"]);
-
+        $result = $api->show($_GET['id']);
+        echo $result;
     } else {
-        $api = new server\api\Api();
-        echo $api->getNews();
+        $result = $api->index();
+        echo $result;
     }
 }
 ?>
