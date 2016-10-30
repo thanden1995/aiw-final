@@ -20,7 +20,7 @@ class Model
     {
         $conn = $this->connect();
         try {
-            $stmt = $conn->query($sql);
+            $stmt = $conn->query($sql, PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             echo("Error < " . $e->getMessage() . " >");
             exit;
