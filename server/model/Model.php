@@ -53,6 +53,15 @@ class Model
         while ($row = $stmt->fetch()) {
             $result["data"][] = $row;
         }
+        $total = count($result["data"]);
+        $perPage = 10;
+        $result["meta"]["pagination"]["total"] = $total;
+        $result["meta"]["pagination"]["perPage"] = $perPage;
+        if ($perPage <= $total) {
+            $result["meta"]["pagination"]["totalPages"] = round($total / $perPage);
+        } else {
+            $result["meta"]["pagination"]["totalPages"] = 1;
+        }
         return $result;
     }
 }

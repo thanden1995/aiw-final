@@ -8,7 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $result = $api->show($_GET['id']);
         echo $result;
     } else {
-        $result = $api->index();
+        if (isset($_GET["page"])) {
+            $page = $_GET["page"];
+
+        } else {
+            $page = 1;
+        }
+        $result = $api->index($page);
         echo $result;
     }
 }

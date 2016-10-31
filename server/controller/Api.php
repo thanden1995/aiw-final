@@ -14,10 +14,36 @@ class Api
         $this->model = new Contact();
     }
 
-    public function index()
+    public function index($page)
     {
-        $result = $this->model->getAllStudent();
+        $result = array();
+        $data = $this->model->getAllStudent();
+        if ($page <= $data["meta"]["pagination"]["totalPages"]) {
+            $result = $this->paginate($data, $page);
+        }
         return $this->transferData($result);
+
+    }
+
+    public function paginate($data, $page)
+    {
+        $result = array();
+        $start = $data["meta"]["pagination"]["perPage"] * ($page - 1);
+        $end = $data["meta"]["pagination"]["perPage"] * $page - 1;
+        for ($i = $start; $i <= $end; $i++) {
+            $result["data"][] = $data["data"][$i];
+        }
+        $result["meta"] = $data["meta"];
+        $result["meta"]["pagination"]["currentPage"] = $page;
+        if ($page == 1) {
+            $result["meta"]["pagination"]["link"]["next"] = "http://ebz.local/student?page=" . ($page + 1);
+        } else if ($page == $result["meta"]["pagination"]["totalPages"]) {
+            $result["meta"]["pagination"]["link"]["previous"] = "http://ebz.local/student?page=" . ($page - 1);
+        } else {
+            $result["meta"]["pagination"]["link"]["next"] = "http://ebz.local/student?page=" . ($page + 1);
+            $result["meta"]["pagination"]["link"]["previous"] = "http://ebz.local/student?page=" . ($page - 1);
+        }
+        return $result;
     }
 
     public function transferData($result)
