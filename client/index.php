@@ -34,13 +34,12 @@
 
         function getApi(url, numPage) {
             $.getJSON(url, function (data) {
-
                 var heading = Object.keys(data.data[0]);
                 $(".body").append("<table id='result' class='table'>");
 
-                $("#result").append("<thead><tr>");
+                $("#result").append("<thead><tr class='head'>");
                 for (var i = 0; i < heading.length; i++) {
-                    $("#result").append("<th class='text-left'>" + heading[i].toUpperCase() + "</th>");
+                    $(".head").append("<th class='text-left'>" + heading[i].toUpperCase() + "</th>");
                 }
                 $("#result").append("</tr></thead>");
                 $("#result").append("<tbody>");
@@ -68,7 +67,7 @@
             $(".body").append("</ul></div>");
         }
 
-        getApi("http://ebz.local/");
+        getApi("http://ebz.local/", 1);
         $(".body").on('click', '.link', function (e) {
             $("#result").remove();
             var numPage = $(e.target).text();
