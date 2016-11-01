@@ -58,9 +58,13 @@ class Model
         $result["meta"]["pagination"]["total"] = $total;
         $result["meta"]["pagination"]["perPage"] = $perPage;
         if ($perPage <= $total) {
-            $result["meta"]["pagination"]["totalPages"] = round($total / $perPage);
+            if (($total % $perPage) == 0) {
+                $result["meta"]["pagination"]["totalPage"] = $total / $perPage;
+            } else {
+                $result["meta"]["pagination"]["totalPage"] = round($total / $perPage) + 1;
+            }          
         } else {
-            $result["meta"]["pagination"]["totalPages"] = 1;
+            $result["meta"]["pagination"]["totalPage"] = 1;
         }
         return $result;
     }

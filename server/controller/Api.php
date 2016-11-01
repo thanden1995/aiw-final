@@ -18,7 +18,7 @@ class Api
     {
         $result = array();
         $data = $this->model->getAllStudent();
-        if ($page <= $data["meta"]["pagination"]["totalPages"]) {
+        if ($page <= $data["meta"]["pagination"]["totalPage"]) {
             $result = $this->paginate($data, $page);
         }
         return $this->transferData($result);
@@ -29,7 +29,11 @@ class Api
     {
         $result = array();
         $start = $data["meta"]["pagination"]["perPage"] * ($page - 1);
-        $end = $data["meta"]["pagination"]["perPage"] * $page - 1;
+        if ($page == $data["meta"]["pagination"]["totalPage"]) {
+            $end = $data["meta"]["pagination"]["total"] - 1;
+        } else {
+            $end = $data["meta"]["pagination"]["perPage"] * $page - 1;
+        }
         for ($i = $start; $i <= $end; $i++) {
             $result["data"][] = $data["data"][$i];
         }
@@ -37,7 +41,7 @@ class Api
         $result["meta"]["pagination"]["currentPage"] = $page;
         if ($page == 1) {
             $result["meta"]["pagination"]["link"]["next"] = "http://ebz.local/student?page=" . ($page + 1);
-        } else if ($page == $result["meta"]["pagination"]["totalPages"]) {
+        } else if ($page == $result["meta"]["pagination"]["totalPage"]) {
             $result["meta"]["pagination"]["link"]["previous"] = "http://ebz.local/student?page=" . ($page - 1);
         } else {
             $result["meta"]["pagination"]["link"]["next"] = "http://ebz.local/student?page=" . ($page + 1);
