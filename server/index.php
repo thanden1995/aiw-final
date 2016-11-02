@@ -1,6 +1,6 @@
 <?php
 use server\api\Api;
-
+include($_SERVER['DOCUMENT_ROOT'] . "/header.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/controller/Api.php");
 $api = new Api();
 if ($_SERVER['REQUEST_METHOD'] == "GET") {

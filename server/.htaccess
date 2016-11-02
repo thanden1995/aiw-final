@@ -12,6 +12,6 @@ Header add Access-Control-Allow-Headers "Content-Type, Access-Control-Allow-Head
         Deny from all
     </Files>
     RewriteEngine On
-    RewriteRule    ^student/([0-9]+)/?$    ?id=$1    [NC,L]    # Handle product request
+    RewriteRule    ^student/([a-zA-Z0-9]+)/?$    ?id=$1    [NC,L]    # Handle product request
     RewriteRule    ^student/?$      index.php  [NC,L]    # Handle product request
 </IfModule>

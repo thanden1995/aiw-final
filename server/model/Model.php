@@ -53,19 +53,24 @@ class Model
         while ($row = $stmt->fetch()) {
             $result["data"][] = $row;
         }
-        $total = count($result["data"]);
-        $perPage = 10;
-        $result["meta"]["pagination"]["total"] = $total;
-        $result["meta"]["pagination"]["perPage"] = $perPage;
-        if ($perPage <= $total) {
-            if (($total % $perPage) == 0) {
-                $result["meta"]["pagination"]["totalPage"] = $total / $perPage;
+        if(count($result)==0){
+            return $result;
+        }else{
+            $total = count($result["data"]);
+            $perPage = 10;
+            $result["meta"]["pagination"]["total"] = $total;
+            $result["meta"]["pagination"]["perPage"] = $perPage;
+            if ($perPage <= $total) {
+                if (($total % $perPage) == 0) {
+                    $result["meta"]["pagination"]["totalPage"] = $total / $perPage;
+                } else {
+                    $result["meta"]["pagination"]["totalPage"] = round($total / $perPage) + 1;
+                }          
             } else {
-                $result["meta"]["pagination"]["totalPage"] = round($total / $perPage) + 1;
-            }          
-        } else {
-            $result["meta"]["pagination"]["totalPage"] = 1;
+                $result["meta"]["pagination"]["totalPage"] = 1;
+            }
+            return $result;
         }
-        return $result;
+        
     }
 }

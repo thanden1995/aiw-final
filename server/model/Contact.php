@@ -9,7 +9,7 @@ class Contact extends \server\model\Model
     */
     public function getStudentById($id)
     {
-        $sql = "SELECT * FROM contact WHERE student_id=" . $id;
+        $sql = "SELECT * FROM contact WHERE student_id='" . $id."'";
         $stmt = $this->query($sql);
         return $this->returnData($stmt);
     }
