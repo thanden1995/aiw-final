@@ -5,7 +5,7 @@
  * Date: 10/29/2016
  * Time: 12:14 AM
  */
-namespace server\model;
+namespace model;
 
 use PDO;
 

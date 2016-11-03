@@ -1,7 +1,7 @@
 <?php
-use server\api\Api;
-include($_SERVER['DOCUMENT_ROOT'] . "/header.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/controller/Api.php");
+require_once("vendor/autoload.php");
+use controller\Api;
+
 $api = new Api();
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if (isset($_GET["id"])) {

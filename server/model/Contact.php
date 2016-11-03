@@ -1,8 +1,7 @@
 <?php
-namespace server\model;
-include($_SERVER['DOCUMENT_ROOT'] . "/model/Model.php");
+namespace model;
 
-class Contact extends \server\model\Model
+class Contact extends Model
 {
     /*
     * Select student detail by student_id

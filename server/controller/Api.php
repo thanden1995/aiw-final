@@ -1,9 +1,7 @@
 <?php
-namespace server\api;
+namespace controller;
 
-use server\model\Contact;
-
-include($_SERVER['DOCUMENT_ROOT'] . "/model/Contact.php");
+use model\Contact;
 
 class Api
 {

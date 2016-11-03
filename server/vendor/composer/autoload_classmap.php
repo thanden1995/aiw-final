@@ -5,4 +5,8 @@
 $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
-return array();
+return array(
+    'controller\\Api' => $baseDir . '/controller/Api.php',
+    'model\\Contact' => $baseDir . '/model/Contact.php',
+    'model\\Model' => $baseDir . '/model/Model.php',
+);
