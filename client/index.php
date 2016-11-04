@@ -21,9 +21,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+            <style type="text/css">
+                body{
+                    margin-top: 100px;
+                }
+            </style>
 </head>
 <body>
-<div class="row">
+<!-- <div class="row">
 	<div class="col-md-2 search">
 		<div id="alert">
 			
@@ -33,7 +38,88 @@
     <div class="col-md-8 body">
 
     </div>
-</div>
+</div> -->
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" id="search-student" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+        </div>
+        <div class="col-md-10 main">
+        
+          <h2 class="sub-header">Section title</h2>
+          <div id="alert">
+            
+          </div>
+          <div class="table-responsive">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     $(document).ready(function () {
         var url = "http://ebz.local/student";
@@ -41,7 +127,7 @@
             $.getJSON(url, function (data) {
             	console.log(data);
                 var heading = Object.keys(data.data[0]);
-                $(".body").append("<table id='result' class='table'>");
+                $(".table-responsive").append("<table id='result' class='table table-striped'>");
 
                 $("#result").append("<thead><tr class='head'>");
                 for (var i = 0; i < heading.length; i++) {
@@ -53,7 +139,7 @@
                     $("#result").append("<tr class='text-left '>" + "<td >" + val.student_id + "</td>" + "<td>" + val.name + "</td>" + "<td>" + val.class + "</td>" + "<td>" + val.phone + "</td>" + "<td>" + val.email + "</td>" + "</tr>");
                 });
                 $("#result").append("</tbody>");
-                $(".body").append("</table>");
+                $(".table-responsive").append("</table>");
                 var meta = data.meta.pagination;
                 var totalPage = meta.totalPage;
                 getPaginatioin(totalPage, numPage)
@@ -67,7 +153,7 @@
         		}else{
         			$("#alert p").remove();
         			var heading = Object.keys(data.data[0]);
-	                $(".body").append("<table id='result' class='table'>");
+	                $(".table-responsive").append("<table id='result' class='table table-striped'>");
 
 	                $("#result").append("<thead><tr class='head'>");
 	                for (var i = 0; i < heading.length; i++) {
@@ -79,12 +165,12 @@
 	                    $("#result").append("<tr class='text-left '>" + "<td >" + val.student_id + "</td>" + "<td>" + val.name + "</td>" + "<td>" + val.class + "</td>" + "<td>" + val.phone + "</td>" + "<td>" + val.email + "</td>" + "</tr>");
 	                });
 	                $("#result").append("</tbody>");
-	                $(".body").append("</table>");
+	                $(".table-responsive").append("</table>");
         		}
             });
         }
         function getPaginatioin(totalPage, currentPage) {
-            $(".body").append("<div id='container-pagination' class='text-center'><ul id='links' class='pagination'>");
+            $(".table-responsive").append("<div id='container-pagination' class='text-center'><ul id='links' class='pagination'>");
             for (var i = 1; i <= totalPage; i++) {
                 if (i == currentPage) {
                     $("#links").append("<li class='active'><a class='link'href='#'>" + i + "</a></li>");
@@ -93,11 +179,11 @@
                 }
 
             }
-            $(".body").append("</ul></div>");
+            $(".table-responsive").append("</ul></div>");
         }
 
         getApi("http://ebz.local/", 1);
-        $(".body").on('click', '.link', function (e) {
+        $(".table-responsive").on('click', '.link', function (e) {
             $("#result").remove();
             var numPage = $(e.target).text();
             $("#container-pagination").remove();
@@ -109,7 +195,11 @@
         		$("#result").remove();
 	            $("#container-pagination").remove();
         		getDetailApi(url+"/"+input);
-        	}
+        	}else if(input.length==0){
+                $("#result").remove();
+                $("#container-pagination").remove();
+                getApi("http://ebz.local/", 1);
+            }
         });
     });
 </script>
