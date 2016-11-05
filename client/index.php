@@ -123,9 +123,10 @@
 <script>
     $(document).ready(function () {
         var url = "http://ebz.local/student";
+        var oldInput=0;
         function getApi(url, numPage) {
             $.getJSON(url, function (data) {
-            	console.log(data);
+            	console.log("get api");
                 var heading = Object.keys(data.data[0]);
                 $(".table-responsive").append("<table id='result' class='table table-striped'>");
 
@@ -147,6 +148,8 @@
         }
         function getDetailApi(url){
         	$.getJSON(url, function (data) {
+                $("#result").remove();
+                $("#container-pagination").remove();
         		if(data==""){
         			$("#alert p").remove();
         			$("#alert").append("<p>Not Found</p>")
@@ -163,6 +166,7 @@
 	                $("#result").append("<tbody>");
 	                $.each(data.data, function (key, val) {
 	                    $("#result").append("<tr class='text-left '>" + "<td >" + val.student_id + "</td>" + "<td>" + val.name + "</td>" + "<td>" + val.class + "</td>" + "<td>" + val.phone + "</td>" + "<td>" + val.email + "</td>" + "</tr>");
+                        oldInput= val.student_id;
 	                });
 	                $("#result").append("</tbody>");
 	                $(".table-responsive").append("</table>");
@@ -181,8 +185,6 @@
             }
             $(".table-responsive").append("</ul></div>");
         }
-
-        getApi("http://ebz.local/", 1);
         $(".table-responsive").on('click', '.link', function (e) {
             $("#result").remove();
             var numPage = $(e.target).text();
@@ -190,17 +192,22 @@
             getApi(url + "?page=" + numPage, numPage);
         });
         $("#search-student").keyup(function(e){
+            e.preventDefault();
         	var input = $("#search-student").val();
-        	if(input.length==10){
-        		$("#result").remove();
-	            $("#container-pagination").remove();
-        		getDetailApi(url+"/"+input);
-        	}else if(input.length==0){
+
+        	if(input.length==0){
                 $("#result").remove();
                 $("#container-pagination").remove();
                 getApi("http://ebz.local/", 1);
+            }else{
+
+                if(oldInput!=input){
+                    getDetailApi(url+"/"+input);
+                }
+                
             }
         });
+        getApi("http://ebz.local/", 1);
     });
 </script>
 </body>
