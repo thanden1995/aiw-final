@@ -124,6 +124,7 @@
     $(document).ready(function () {
         var url = "http://ebz.local/student";
         var oldInput=0;
+        var oldData;
         function getApi(url, numPage) {
             $.getJSON(url, function (data) {
             	console.log("get api");
@@ -154,24 +155,28 @@
         			$("#alert p").remove();
         			$("#alert").append("<p>Not Found</p>")
         		}else{
-        			$("#alert p").remove();
-        			var heading = Object.keys(data.data[0]);
-	                $(".table-responsive").append("<table id='result' class='table table-striped'>");
-
-	                $("#result").append("<thead><tr class='head'>");
-	                for (var i = 0; i < heading.length; i++) {
-	                    $(".head").append("<th class='text-left'>" + heading[i].toUpperCase() + "</th>");
-	                }
-	                $("#result").append("</tr></thead>");
-	                $("#result").append("<tbody>");
-	                $.each(data.data, function (key, val) {
-	                    $("#result").append("<tr class='text-left '>" + "<td >" + val.student_id + "</td>" + "<td>" + val.name + "</td>" + "<td>" + val.class + "</td>" + "<td>" + val.phone + "</td>" + "<td>" + val.email + "</td>" + "</tr>");
-                        oldInput= val.student_id;
-	                });
-	                $("#result").append("</tbody>");
-	                $(".table-responsive").append("</table>");
+                    oldData=data.data;
+        			displayDetailApi(data);
         		}
             });
+        }
+        function displayDetailApi(data){
+                    $("#alert p").remove();
+                    var heading = Object.keys(data.data[0]);
+                    $(".table-responsive").append("<table id='result' class='table table-striped'>");
+
+                    $("#result").append("<thead><tr class='head'>");
+                    for (var i = 0; i < heading.length; i++) {
+                        $(".head").append("<th class='text-left'>" + heading[i].toUpperCase() + "</th>");
+                    }
+                    $("#result").append("</tr></thead>");
+                    $("#result").append("<tbody>");
+                    $.each(data.data, function (key, val) {
+                        $("#result").append("<tr class='text-left '>" + "<td >" + val.student_id + "</td>" + "<td>" + val.name + "</td>" + "<td>" + val.class + "</td>" + "<td>" + val.phone + "</td>" + "<td>" + val.email + "</td>" + "</tr>");
+                        oldInput= val.student_id;
+                    });
+                    $("#result").append("</tbody>");
+                    $(".table-responsive").append("</table>");
         }
         function getPaginatioin(totalPage, currentPage) {
             $(".table-responsive").append("<div id='container-pagination' class='text-center'><ul id='links' class='pagination'>");
@@ -200,11 +205,7 @@
                 $("#container-pagination").remove();
                 getApi("http://ebz.local/", 1);
             }else{
-
-                if(oldInput!=input){
-                    getDetailApi(url+"/"+input);
-                }
-                
+                getDetailApi(url+"/"+input);       
             }
         });
         getApi("http://ebz.local/", 1);
